@@ -63,7 +63,9 @@ fun ComposeRightImageNews(
                 start.linkTo(parent.start)
                 bottom.linkTo(parent.bottom)
             },
-            color = Color(0xFF999999)
+            color = Color(0xFF999999),
+            maxLines = 1,
+            overflow = TextOverflow.Ellipsis
         )
 
         Image(
