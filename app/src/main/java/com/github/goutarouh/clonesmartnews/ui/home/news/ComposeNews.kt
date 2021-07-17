@@ -15,6 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.constraintlayout.compose.ConstraintLayout
 import androidx.constraintlayout.compose.Dimension
+import com.github.goutarouh.clonesmartnews.ui.home.news.NewsData
 import com.google.accompanist.coil.rememberCoilPainter
 
 

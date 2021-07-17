@@ -1,4 +1,4 @@
-package com.github.goutarouh.clonesmartnews.ui.home
+package com.github.goutarouh.clonesmartnews.ui.home.news
 
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData

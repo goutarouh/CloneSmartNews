@@ -1,4 +1,4 @@
-package com.github.goutarouh.clonesmartnews.ui.home
+package com.github.goutarouh.clonesmartnews.ui.home.news
 
 data class NewsData(
     val id: String,

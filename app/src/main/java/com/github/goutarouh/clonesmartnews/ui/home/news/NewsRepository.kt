@@ -1,5 +1,6 @@
-package com.github.goutarouh.clonesmartnews.ui.home
+package com.github.goutarouh.clonesmartnews.ui.home.news
 
+import com.github.goutarouh.clonesmartnews.ui.home.news.NewsData
 import kotlinx.coroutines.delay
 
 
