@@ -8,8 +8,7 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import com.github.goutarouh.clonesmartnews.home.bottomnavigation.BottomNavigationScreens
-import com.github.goutarouh.clonesmartnews.ui.home.NewsListScreen
-import com.github.goutarouh.clonesmartnews.ui.home.news.SmartNewsTabsScreen
+import com.github.goutarouh.clonesmartnews.home.bottomnavigation.NewsScreen
 
 @Composable
 fun SmartNewsNavigationHost(
@@ -27,8 +26,7 @@ private fun NavGraphBuilder.bottomTabs(
     navController: NavHostController
 ) {
     composable(BottomNavigationScreens.Home.route) { backStack ->
-        SmartNewsTabsScreen()
-        //NewsListScreen()
+        NewsScreen()
     }
     composable(BottomNavigationScreens.Weather.route) { backStack ->
         Text(text = "Weather")

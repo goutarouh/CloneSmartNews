@@ -9,11 +9,7 @@ import androidx.compose.foundation.border
 import androidx.compose.foundation.layout.*
 import androidx.compose.material.*
 import androidx.compose.material.TabRowDefaults.tabIndicatorOffset
-import androidx.compose.runtime.Composable
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
-import androidx.compose.runtime.setValue
-import androidx.compose.runtime.getValue
+import androidx.compose.runtime.*
 import androidx.compose.runtime.livedata.observeAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -34,14 +30,19 @@ val tabColorList = listOf<Color>(
 
 @Composable
 fun SmartNewsTabsScreen(
+    selectedTabIndexState: MutableState<Int>,
     viewModel: NewsViewModel = viewModel()
 ) {
     val genreList: List<NewsGenre> by viewModel.genreList.observeAsState(listOf())
 
     if (genreList.isEmpty()) {
-        Text("loading")
+        CircularProgressIndicator(
+            modifier = Modifier.fillMaxSize(),
+            strokeWidth = 2.dp
+        )
     } else {
         SmartNewsTabs(
+            selectedTabIndexState,
             genreList = genreList
         )
     }
@@ -50,11 +51,11 @@ fun SmartNewsTabsScreen(
 
 @Composable
 fun SmartNewsTabs(
+    selectedTabIndexState: MutableState<Int>,
     genreList: List<NewsGenre>
 ) {
-    var selectedTabIndex: Int by remember { mutableStateOf(0) }
     ScrollableTabRow(
-        selectedTabIndex = selectedTabIndex,
+        selectedTabIndex = selectedTabIndexState.value,
         edgePadding = 0.dp,
         indicator = {
             Box(
@@ -62,13 +63,13 @@ fun SmartNewsTabs(
                     .wrapContentSize(Alignment.BottomStart)
                     .fillMaxWidth()
                     .height(3.dp)
-                    .background(color = tabColorList[selectedTabIndex % (tabColorList.size)])
+                    .background(color = tabColorList[selectedTabIndexState.value % (tabColorList.size)])
             )
         },
         tabs = {
             genreList.forEachIndexed { index, genre ->
                 Button(
-                    onClick = { selectedTabIndex = index },
+                    onClick = { selectedTabIndexState.value = index },
                     colors = ButtonDefaults.buttonColors(backgroundColor = tabColorList[index % (tabColorList.size)])
                 ) {
                     Text(
@@ -79,24 +80,3 @@ fun SmartNewsTabs(
         }
     )
 }
-
-fun Modifier.myTabModifier(
-    currentTabPosition: TabPosition
-): Modifier = composed(
-    inspectorInfo = debugInspectorInfo {
-        name = "tabIndicatorOffset"
-        value = currentTabPosition
-    }
-) {
-    // TODO: should we animate the width of the indicator as it moves between tabs of different
-    // sizes inside a scrollable tab row?
-    val currentTabWidth = currentTabPosition.width
-    val indicatorOffset by animateDpAsState(
-        targetValue = currentTabPosition.left,
-        animationSpec = tween(durationMillis = 250, easing = FastOutSlowInEasing)
-    )
-    fillMaxWidth()
-        .wrapContentSize(Alignment.BottomStart)
-        .offset(x = indicatorOffset)
-}
-
